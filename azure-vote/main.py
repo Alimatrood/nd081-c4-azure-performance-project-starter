@@ -33,7 +33,7 @@ logger.addHandler(AzureLogHandler(
 
 
 # Metrics
-exporter = metrics_exporter.new_metrics_exporter(
+exporter = metrics_exporter.new_metrics_exporter(enable_standard_metrics=True,
     connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7') # TODO: Setup exporter
 
 
