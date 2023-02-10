@@ -24,7 +24,7 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 
 
-viewManager = stats_module.ViewManager
+
 # Logging
 logger = logging.getLogger(__name__)
 logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'))
@@ -36,7 +36,7 @@ exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
     connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'
 )
-viewManager.register_exporter(exporter)
+
 
 # Tracing
 #tracer = # TODO: Setup tracer
