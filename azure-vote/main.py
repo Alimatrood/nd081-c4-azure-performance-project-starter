@@ -26,34 +26,30 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 
 # Logging
-logger = logging.getLogger(__name__) # TODO: Setup logger
-logger.addHandler(AzureLogHandler(
-    connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7')
-)
-
-
+logger = logging.getLogger(__name__)
+logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'))
+logger.setLevel(logging.INFO)
 # Metrics
-exporter = metrics_exporter.new_metrics_exporter(enable_standard_metrics=True,
-    connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7') # TODO: Setup exporter
-
-
-
-# Tracing
-
-# TODO: Setup tracer
-tracer =  tracer = Tracer(
-    exporter=AzureExporter(
-        connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'),
-    sampler=ProbabilitySampler(1.0),
+# exporter = # TODO: Setup exporter
+exporter = metrics_exporter.new_metrics_exporter(
+    enable_standard_metrics=True,
+    connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'
 )
+# Tracing
+#tracer = # TODO: Setup tracer
+tracer = Tracer(
+    exporter = AzureExporter(
+        connection_string = 'InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'),
+    sampler = ProbabilitySampler(1.0),
+)
+
 app = Flask(__name__)
 
 # Requests
-# TODO: Setup flask middleware
-
-middleware =  middleware = FlaskMiddleware(
+# middleware = # TODO: Setup flask middleware
+middleware = FlaskMiddleware(
     app,
-    exporter=AzureExporter(connection_string="InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7"),
+    exporter=AzureExporter(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'),
     sampler=ProbabilitySampler(rate=1.0),
 )
 
