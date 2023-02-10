@@ -94,10 +94,10 @@ def index():
         # Get current values
         vote1 = r.get(button1).decode('utf-8')
         # TODO: use tracer object to trace cat vote
-        tracer.span(name="Cat")
+        tracer.span(name="CatsVote")
         vote2 = r.get(button2).decode('utf-8')
         # TODO: use tracer object to trace dog vote
-        tracer.span(name="Dog")
+        tracer.span(name="DogsVote")
 
         # Return index with values
         return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
@@ -112,12 +112,12 @@ def index():
             vote1 = r.get(button1).decode('utf-8')
             properties = {'custom_dimensions': {'Cats Vote': vote1}}
             # TODO: use logger object to log cat vote
-            logger.info('Cat')
+            logger.info('Cats', extra= properties)
 
             vote2 = r.get(button2).decode('utf-8')
             properties = {'custom_dimensions': {'Dogs Vote': vote2}}
             # TODO: use logger object to log dog vote
-            logger.info('Dog')
+            logger.info('Dogs', extra= properties)
 
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
 
