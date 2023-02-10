@@ -27,19 +27,19 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 logger = logging.getLogger(__name__)
-logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'))
+logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'))
 logger.setLevel(logging.INFO)
 # Metrics
 # exporter = # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
-    connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'
+    connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'
 )
 # Tracing
 #tracer = # TODO: Setup tracer
 tracer = Tracer(
     exporter = AzureExporter(
-        connection_string = 'InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'),
+        connection_string = 'InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'),
     sampler = ProbabilitySampler(1.0),
 )
 
@@ -49,7 +49,7 @@ app = Flask(__name__)
 # middleware = # TODO: Setup flask middleware
 middleware = FlaskMiddleware(
     app,
-    exporter=AzureExporter(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/'),
+    exporter=AzureExporter(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'),
     sampler=ProbabilitySampler(rate=1.0),
 )
 
@@ -123,6 +123,7 @@ def index():
             vote = request.form['vote']
             r.incr(vote,1)
 
+            logger.info('{} vote'.format(vote))
             # Get current values
             vote1 = r.get(button1).decode('utf-8')
             vote2 = r.get(button2).decode('utf-8')
