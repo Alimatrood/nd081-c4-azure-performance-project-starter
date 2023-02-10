@@ -27,7 +27,7 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 
 # Logging
 logger = logging.getLogger(__name__)
-logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'))
+#logger.addHandler(AzureLogHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'))
 logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=43df5987-31c4-4111-8939-4073fb833df7'))
 logger.setLevel(logging.INFO)
 # Metrics
